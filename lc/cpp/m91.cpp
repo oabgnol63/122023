@@ -3,19 +3,34 @@
 
 class Solution {
     public:
-        int ctoi(char c) {
-            return c - '0';
+        int ctoi(char numc) {
+            return numc - '0';
         }
         int numDecodings(std::string s) {
                 if(s[0] == '0') return 0;
+                if(s.length() == 1 ) return 1;
                 int dp[s.length()];
-                if(s[s.length()-1] - '0' > 0 && s[s.length()-1] - '0' <= 26) dp[s.length()-1] = 1;
-                else dp[s.length()-1] = 0;
-                for(int i = s.length() -2; i >= 0; i--) {
-                    if(ctoi(s[i])*10+ctoi(s[i+1]) > 0 && ctoi(s[i])*10+ctoi(s[i+1]) <=26 && ctoi(s[i]) != 0) {
-                        dp[i] =  dp[i+1] + 1;
+                if(ctoi(s[s.length()-1]) > 0) 
+                    dp[s.length()-1] = 1;
+                else 
+                    dp[s.length()-1] = 0;
+                if (ctoi(s[s.length()-2]) == 0)
+                    dp[s.length()-2] = 0;
+                else if (ctoi(s[s.length()-2])*10 + ctoi(s[s.length()-1]) > 0 && ctoi(s[s.length()-2])*10 + ctoi(s[s.length()-1]) <= 26) 
+                    dp[s.length()-2] = dp[s.length()-1] + 1;
+                else 
+                    dp[s.length()-2] = dp[s.length()-1];
+                //std::cout << dp[s.length()-2] << " " << dp[s.length()-1] << " ";
+                for(int i = s.length() -3; i >= 0; i--) {
+                    if(ctoi(s[i]) == 0 ) {
+                        dp[i] =  0;
                     }
-                    else dp[i] = dp[i+1];
+                    else if (ctoi(s[i])*10 + ctoi(s[i+1]) > 0 && ctoi(s[i])*10 + ctoi(s[i+1]) <= 26)
+                        dp[i] = dp[i+1] + dp[i+2];
+
+                    else 
+                        dp[i] = dp[i+1];
+                    //std::cout << dp[i] << " ";
                 }
                 return dp[0];
         }
@@ -35,5 +50,5 @@ int main() {
     // std::cout << "\n" << *s.rbegin();
     // return *s.rbegin();
     Solution a;
-    std::cout << a.numDecodings("2101");
+    std::cout << "\n" << a.numDecodings("2839");
 }
