@@ -1,5 +1,7 @@
 import sys
 from os import statvfs_result
+import paramiko
+import re
 
 mylist = ["metric.dump  flights.dump   memory_pool.dump"]
 
@@ -22,4 +24,6 @@ s = (
         a
     )
 
-print(s)
+b = 1
+c = 2
+print(f"{b}{c}")
