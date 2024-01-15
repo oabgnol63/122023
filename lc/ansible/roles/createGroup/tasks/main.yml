@@ -1,0 +1,4 @@
+- name: create new group
+  ansible.builtin.group:
+    name: "{{ newgroup }}"
+    system: true

@@ -1,0 +1,16 @@
+---
+- name: use when condition
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: get os-release file content
+      command: cat /etc/os-release
+      register: os_release
+    - name: detect Ubuntu hosts
+      set_fact:
+        is_ubuntu: true
+      #when: ansible_facts['distribution']=='Ubuntu'
+      when: os_release.stdout.find('Ubuntu') != -1 or ansible_facts['distribution']=='Ubuntu'
+    - name: print all ipv4 infomation
+      debug:
+        msg: "{{ ansible_default_ipv4 if is_ubuntu else 'Ubuntu server not found!' }}"

@@ -1,0 +1,15 @@
+---
+- name: test ping command
+  hosts: all
+  roles:
+    - common
+- name: create group
+  hosts: all
+  become: true
+  roles:
+    - createGroup
+- name: new user
+  hosts: all
+  become: true
+  roles:
+    - createUser

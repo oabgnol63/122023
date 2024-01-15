@@ -1,0 +1,12 @@
+- name: ping
+  ping:
+- name: import variable of user
+  include_vars: /home/ansible_user/ansible/roles/createUser/vars/main.yml
+- name: import variable of group
+  include_vars: /home/ansible_user/ansible/roles/createGroup/vars/main.yml
+- name: inform
+  debug: 
+    msg:
+    - "Create new group: '{{ newgroup }}'"
+    - "Create new user: '{{ newuser }}'"
+
